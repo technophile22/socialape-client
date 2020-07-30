@@ -12,33 +12,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const styles = {
-    form: {
-        textAlign: 'center'
-    },
-    image: {
-        margin: '20px auto 20px auto'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    textField: {
-        margin: '10px auto 10px auto'
-    },
-    button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    customError: {
-        color: 'red',
-        fontSize: '0.8rem',
-        marginTop: 10
-    },
-    progress: {
-        position: 'absolute'
-    }
-
-};
+const styles = (theme) => ({
+    ...theme.spreadThis
+});
 
 class login extends Component {
     constructor(){
@@ -63,6 +39,7 @@ class login extends Component {
         axios.post('/login', userData)
             .then(res => {
                 console.log(res.data);
+                localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
                 this.setState({
                     loading: false
                 });
@@ -90,7 +67,7 @@ class login extends Component {
             <Container maxWidth="xs" className={classes.form}>
                     <img src={AppIcon} alt="app logo" className={classes.image}/>
                     <Typography variant="h3" className={classes.pageTitle}> Login </Typography>
-                    <form noValidate onSubmit={this.handleSubmit} autocomplete="off">
+                    <form noValidate onSubmit={this.handleSubmit} autoComplete="off">
                         <TextField
                         id="email"
                         name="email"
@@ -140,7 +117,7 @@ class login extends Component {
                         </Button>
                         <br />
                         
-                        <small>dont have an account ? sign up <Link to="/signup">here</Link></small>
+                        <small>don't have an account ? sign up <Link to="/signup">here</Link></small>
                     </form>
             </Container>
            
