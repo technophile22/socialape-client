@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {Link} from 'react-router-dom';
 import dayjs from 'dayjs';
-
+import EditDetails from './EditDetails';
 //MUI stuff
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -16,6 +16,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 //Redux stuff
 import {connect} from 'react-redux';
@@ -36,6 +37,9 @@ class Profile extends Component {
     handleEditPicture = () => {
         const fileInput = document.getElementById('imageInput');
         fileInput.click();
+    }
+    handleLogout = () => {
+        this.props.logoutUser();
     }
     render() {
         const {classes,
@@ -59,7 +63,7 @@ class Profile extends Component {
                     </Tooltip>
                 </div>
                 <hr/>
-                <div className="profile-details">
+                <div className="profile-details" >
                     <MuiLink component = {Link} to={`/users/${handle}`} color="primary" variant="h5">
                         @{handle}
                     </MuiLink>
@@ -84,6 +88,12 @@ class Profile extends Component {
                     <CalendarTodayIcon color="primary"/>{' '}
                     <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
                 </div>
+                <Tooltip title="Logout" placement="top">
+                    <IconButton onClick={this.handleLogout}>
+                        <ExitToAppIcon color="primary" />
+                    </IconButton>
+                </Tooltip>
+                <EditDetails />
             </div>
          </Paper>
     ) : (
